@@ -1,4 +1,5 @@
 <script setup>
+    import axios from 'axios';
     import { ref } from 'vue';
     import * as bootstrap from 'bootstrap';
     
@@ -6,8 +7,28 @@
     const name = ref('');
     const middlename = ref('');
 
-    function createPerson() {
+    const emit = defineEmits(['create']);
 
+    function createPerson() {
+        const modalInstance = bootstrap.Modal.getOrCreateInstance('#person-create-modal');
+        modalInstance.hide();
+        const person_data = {
+            name: name.value,
+            surname: surname.value,
+            middlename: middlename.value
+        };
+
+        name.value = '';
+        surname.value = '';
+        surname.value = '';
+
+        axios.post('persons/create/', person_data)
+        .then((response) => {
+            emit('create', response.data);
+        })
+        .catch((error) => {
+            alert(`Возникла непридвиденная ошибка: ${error.message}`);
+        })
     }
 </script>
 <template>
