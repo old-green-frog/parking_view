@@ -4,6 +4,7 @@
     import { ref, onMounted } from 'vue';
     import CreateForm from './CreateForm.vue';
     import DeleteForm from './DeleteForm.vue';
+    import UpdateForm from './UpdateForm.vue';
 
     const persons_ref = ref([]);
     const fetching = ref(false);
@@ -19,6 +20,19 @@
     function deletePerson(id) {
         fetching.value = true;
         persons_ref.value = persons_ref.value.filter((person) => person.id != id);
+        fetching.value = false;
+    }
+
+    function createPerson(person) {
+        fetching.value = true;
+        persons_ref.value.push(person);
+        fetching.value = false;
+    }
+
+    function updatePerson(person) {
+        fetching.value = true;
+        var foundIndex = persons_ref.value.findIndex(x => x.id == person.id);
+        persons_ref.value[foundIndex] = person;
         fetching.value = false;
     }
 
@@ -43,12 +57,14 @@
                     <td class="text-nowrap align-left">{{ index + 1 }}</td>
                     <td>{{ person.surname }} {{ person.name }} {{ person.middlename }}</td>
                     <td class="text-center align-middle"><UDButtons :target="person.id"></UDButtons>
-                        <DeleteForm :target="person.id" @delete="(id) => deletePerson(id)"></DeleteForm></td>
+                        <DeleteForm :target="person.id" @delete="(id) => deletePerson(id)"></DeleteForm>
+                        <UpdateForm :person="person" @update="(person) => updatePerson(person)"></UpdateForm>
+                    </td>
                 </tr>
                 </tbody>
             </table>
             <div v-else>Загрузка...</div>
         </div>
     </div>
-    <CreateForm></CreateForm>
+    <CreateForm @create="(person) => createPerson(person)"></CreateForm>
 </template>

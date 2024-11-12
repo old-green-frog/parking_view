@@ -12,10 +12,15 @@
     })
 
     function submitDelete(id) {
-        axios.delete(`persons/${id}/`)
         const modalInstance = bootstrap.Modal.getOrCreateInstance(`#${id}-delete`);
         modalInstance.hide();
-        emit('delete', id)
+        axios.delete(`persons/${id}/`)
+            .then(() => {
+                emit('delete', id);
+            })
+            .catch((error) => {
+                alert(`Возникла непридвиденная ошибка: ${error.message}`);
+            });
     }
 </script>
 <template>
