@@ -12,7 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
             <li class="nav-item"><RouterLink class="nav-link" to="/persons" active-class="active">Кленты</RouterLink></li>
             <li class="nav-item"><RouterLink class="nav-link" to="/statuses" active-class="active">Статусы</RouterLink></li>
             <li class="nav-item"><RouterLink class="nav-link" to="/cars" active-class="active">Машины</RouterLink></li>
-            <!-- <li class="nav-item"><RouterLink class="nav-link" to="/slots">Парковочные места</RouterLink></li> -->
+            <li class="nav-item"><RouterLink class="nav-link" to="/slots" active-class="active">Парковочные места</RouterLink></li>
           </ul>
         </div>
       </div>
